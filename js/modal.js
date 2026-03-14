@@ -90,66 +90,65 @@ const petsData = [
 ];
 
 
-const overlay = document.getElementById('modal-overlay');
-const modalContent = document.getElementById('modal-content');
-const closeBtn = document.getElementById('modal-close');
-const cardsContainer = document.querySelector('[data-js-pets-container]');
+export function initModal() {
+  const overlay = document.getElementById('modal-overlay');
+  const modalContent = document.getElementById('modal-content');
+  const closeBtn = document.getElementById('modal-close');
+  const cardsContainer = document.querySelector('[data-js-pets-container], [ data-js-pets-grid]');
 
-function openModal(petName) {
-  const pet = petsData.find(p => p.name === petName);
-  if (!pet) return;
+  if (!cardsContainer) return;
 
-  modalContent.innerHTML = `
-    <img class="modal-img" src="${pet.img}" alt="${pet.name}">
-    <div class="modal-info">
-      <h3 class="modal-name">${pet.name}</h3>
-      <h4 class="modal-type-breed">${pet.type} - ${pet.breed}</h4>
-      <p class="modal-descr">${pet.description}</p>
-      <ul class="modal-list">
-        <li>Age: <span>${pet.age}</span></li>
-        <li>Inoculations: <span>${pet.inoculations.join(', ')}</span></li>
-        <li>Diseases: <span>${pet.diseases.join(', ')}</span></li>
-        <li>Parasites: <span>${pet.parasites.join(', ')}</span></li>
-      </ul>
-    </div>
-  `;
+  function openModal(petName) {
+    const pet = petsData.find(p => p.name.trim() === petName.trim());
+    if (!pet) return;
 
-  overlay.classList.add('active');
-  document.body.classList.add('lock');
-  console.log('Привет')
+    modalContent.innerHTML = `
+      <img class="modal-img" src="${pet.img}" alt="${pet.name}">
+      <div class="modal-info">
+        <h3 class="modal-name">${pet.name}</h3>
+        <h4 class="modal-type-breed">${pet.type} - ${pet.breed}</h4>
+        <p class="modal-descr">${pet.description}</p>
+        <ul class="modal-list">
+          <li><b>Age:</b> <span>${pet.age}</span></li>
+          <li><b>Inoculations:</b> <span>${pet.inoculations.join(', ')}</span></li>
+          <li><b>Diseases:</b> <span>${pet.diseases.join(', ')}</span></li>
+          <li><b>Parasites:</b> <span>${pet.parasites.join(', ')}</span></li>
+        </ul>
+      </div>
+    `;
 
-}
-
-
-cardsContainer.addEventListener('click', (e) => {
-  e.preventDefault()
-
-  const card = e.target.closest('.friends-item');
-  if (card) {
-    const name = card.querySelector('.friends-item__title').innerText;
-    openModal(name);
+    overlay.classList.add('active');
+    document.body.classList.add('lock');
   }
-});
 
+  const closeModal = () => {
+    overlay.classList.remove('active');
+    document.body.classList.remove('lock');
+  };
 
-const closeModal = () => {
-  overlay.classList.remove('active');
-  document.body.classList.remove('lock');
-};
+  cardsContainer.addEventListener('click', (e) => {
+    const card = e.target.closest('.friends-item');
+    if (card) {
+      e.preventDefault();
+      const name = card.querySelector('.friends-item__title').innerText;
+      openModal(name);
+    }
+  });
 
-closeBtn.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
 
-overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) closeModal();
-});
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
 
-
-overlay.addEventListener('mouseover', (e) => {
+  overlay.addEventListener('mouseover', (e) => {
     if (e.target === overlay) closeBtn.style.backgroundColor = '#F1CDB3';
-});
-overlay.addEventListener('mouseout', (e) => {
+  });
+  
+  overlay.addEventListener('mouseout', (e) => {
     if (e.target === overlay) closeBtn.style.backgroundColor = 'transparent';
-});
+  });
+}
 
 
 

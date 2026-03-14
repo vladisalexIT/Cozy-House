@@ -79,18 +79,10 @@ function mountPages() {
   track.appendChild(renderPage(state.currIds));
   track.appendChild(renderPage(state.nextIds));
 
+  
+
   track.style.transition = 'none';
   track.style.transform = 'translateX(-100%)';
-}
-
-function init() {
-  state.perPage = calcPerPage();
-
-  state.currIds = generatePageIds(state.perPage, []);
-  state.nextIds = generatePageIds(state.perPage, state.currIds);
-  state.prevIds = generatePageIds(state.perPage, state.currIds);
-
-  mountPages();
 }
 
 function slideToNext() {
@@ -127,31 +119,40 @@ function slideToPrev() {
   }, { once: true });
 }
 
+export function initSlider() {
+  const sliderContainer = document.querySelector('[data-js-pets-container]');
+  if (!sliderContainer) return
 
-document.querySelectorAll('a[href="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault(); 
+  state.perPage = calcPerPage();
+
+  state.currIds = generatePageIds(state.perPage, []);
+  state.nextIds = generatePageIds(state.perPage, state.currIds);
+  state.prevIds = generatePageIds(state.perPage, state.currIds);
+
+  mountPages();
+
+  document.querySelectorAll('a[href="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); 
+    });
   });
-});
-btnRight.addEventListener('click', slideToNext);
-btnLeft.addEventListener('click', slideToPrev);
+  btnRight.addEventListener('click', slideToNext);
+  btnLeft.addEventListener('click', slideToPrev);
 
-let resizeT;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeT);
-  resizeT = setTimeout(() => {
-    const newPerPage = calcPerPage();
-    if (newPerPage === state.perPage) return;
+  let resizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => {
+      const newPerPage = calcPerPage();
+      if (newPerPage === state.perPage) return;
 
-    state.perPage = newPerPage;
+      state.perPage = newPerPage;
 
-    state.currIds = generatePageIds(state.perPage, []);
-    state.nextIds = generatePageIds(state.perPage, state.currIds);
-    state.prevIds = generatePageIds(state.perPage, state.currIds);
+      state.currIds = generatePageIds(state.perPage, []);
+      state.nextIds = generatePageIds(state.perPage, state.currIds);
+      state.prevIds = generatePageIds(state.perPage, state.currIds);
 
-    mountPages();
-  }, 150);
-});
-
-init();
-
+      mountPages();
+    }, 150);
+  });
+}

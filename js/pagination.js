@@ -1,4 +1,4 @@
-(() => {
+export const initPagination = () => {
   const pets = [
     { name: 'Katrine',  img: 'images/pets-katrine.jpg' },
     { name: 'Jennifer', img: 'images/pets-jennifer.jpg' },
@@ -10,7 +10,7 @@
     { name: 'Freddie',  img: 'images/pets/8.jpg' },
   ];
 
-  const grid = document.querySelector('.friends__grid');
+  const grid = document.querySelector('[data-js-pets-grid]');
   const pager = document.querySelector('.pagination__list');
   if (!grid || !pager) return;
 
@@ -65,7 +65,6 @@
     }
     return result;
   }
-
 
   const store = {
     seq48: build48(),
@@ -122,4 +121,4 @@
   });
 
   renderPage(1);
-})();
+};

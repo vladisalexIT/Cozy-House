@@ -440,7 +440,7 @@ body.lock {
 	flex: 0 0 100%;
 	display: flex;
 	justify-content: center;
-	gap: 90px;
+	gap: 89px;
 	box-sizing: border-box;
 }
 
@@ -802,9 +802,9 @@ body.lock {
 	object-fit: cover;
 }
 
-/* .modal-info {
-    padding: 50px 20px 0 0;
-} */
+.modal-info {
+    padding-right: 20px;
+}
 
 .modal-name {
 	font-size: 35px;
