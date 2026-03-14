@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <script src="./js/burger.js" defer></script>
+    <script src="./js/modal.js" defer></script>
+    <script src="./js/slider.js" defer></script>
 </head>
 
 <body>
@@ -96,7 +98,7 @@
                     Our friends who
                     are&nbsp;looking for a house
                 </h2>
-                <div class="friends__slider slider">
+                <div class="friends__slider slider" data-js-pets-container>
                     <div class="slider__arrow slider__arrow--left" id="btn-left">
                         <svg width="14" height="6" viewBox="0 0 14 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14 2V4H3V6L0 3L3 0V2H14Z" fill="#292929" />
@@ -364,6 +366,12 @@
             </div>
         </div>
     </footer>
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-window">
+            <button id="modal-close" class="modal-close-btn">×</button>
+            <div id="modal-content" class="modal-card"></div>
+        </div>
+    </div>
 </body>
 
 </html>
