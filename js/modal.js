@@ -124,6 +124,9 @@ export function initModal() {
   const closeModal = () => {
     overlay.classList.remove('active');
     document.body.classList.remove('lock');
+    setTimeout(() => {
+      modalContent.innerHTML = '';
+    }, 300);
   };
 
   cardsContainer.addEventListener('click', (e) => {
@@ -144,7 +147,7 @@ export function initModal() {
   overlay.addEventListener('mouseover', (e) => {
     if (e.target === overlay) closeBtn.style.backgroundColor = '#F1CDB3';
   });
-  
+
   overlay.addEventListener('mouseout', (e) => {
     if (e.target === overlay) closeBtn.style.backgroundColor = 'transparent';
   });

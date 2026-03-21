@@ -1,20 +1,18 @@
-const track = document.getElementById('track');
-const btnLeft = document.getElementById('btn-left');
-const btnRight = document.getElementById('btn-right');
+const track = document.querySelector('[data-js-track]');
+const btnLeft = document.querySelector('[data-js-btn-left]');
+const btnRight = document.querySelector('[data-js-btn-right]');
 
-const GAP = 90;
-const CARD_W = 270;
 const ANIM_MS = 500;
 
 const pets = [
-  { id: 'katrine',  name: 'Katrine',  img: 'images/pets-katrine.jpg' },
+  { id: 'katrine', name: 'Katrine', img: 'images/pets-katrine.jpg' },
   { id: 'jennifer', name: 'Jennifer', img: 'images/pets-jennifer.jpg' },
-  { id: 'woody',    name: 'Woody',    img: 'images/pets-woody.jpg' },
-  { id: 'sophia',   name: 'Sophia',   img: 'images/pets/4.jpg' },
-  { id: 'timmy',    name: 'Timmy',    img: 'images/pets/pets-timmy.png' },
-  { id: 'charly',   name: 'Charly',   img: 'images/pets/pets-charly.jpg' },
+  { id: 'woody', name: 'Woody', img: 'images/pets-woody.jpg' },
+  { id: 'sophia', name: 'Sophia', img: 'images/pets/4.jpg' },
+  { id: 'timmy', name: 'Timmy', img: 'images/pets/pets-timmy.png' },
+  { id: 'charly', name: 'Charly', img: 'images/pets/pets-charly.jpg' },
   { id: 'scarlett', name: 'Scarlett', img: 'images/pets/pets-scarlet.jpg' },
-  { id: 'freddie',  name: 'Freddie',  img: 'images/pets/8.jpg' },
+  { id: 'freddie', name: 'Freddie', img: 'images/pets/8.jpg' },
 ];
 
 const state = {
@@ -32,20 +30,15 @@ function calcPerPage() {
   return 1;
 }
 
-function shuffle(arr) {
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
 function generatePageIds(perPage, excludeIds = []) {
-  const exclude = new Set(excludeIds);
-  const candidates = pets.map(p => p.id).filter(id => !exclude.has(id));
+  const allIds = pets.map(pet => pet.id);
+  const availableIds = allIds.filter(id => !excludeIds.includes(id));
 
-  return shuffle(candidates).slice(0, perPage);
+  return shuffle(availableIds).slice(0, perPage);
 }
 
 function renderCard(pet) {
@@ -78,8 +71,6 @@ function mountPages() {
   track.appendChild(renderPage(state.prevIds));
   track.appendChild(renderPage(state.currIds));
   track.appendChild(renderPage(state.nextIds));
-
-  
 
   track.style.transition = 'none';
   track.style.transform = 'translateX(-100%)';
@@ -133,7 +124,7 @@ export function initSlider() {
 
   document.querySelectorAll('a[href="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault(); 
+      e.preventDefault();
     });
   });
   btnRight.addEventListener('click', slideToNext);
