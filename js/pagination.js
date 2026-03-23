@@ -1,13 +1,13 @@
 export const initPagination = () => {
   const pets = [
-    { name: 'Katrine',  img: 'images/pets-katrine.jpg' },
+    { name: 'Katrine', img: 'images/pets-katrine.jpg' },
     { name: 'Jennifer', img: 'images/pets-jennifer.jpg' },
-    { name: 'Woody',    img: 'images/pets-woody.jpg' },
-    { name: 'Sophia',   img: 'images/pets/4.jpg' },
-    { name: 'Timmy',    img: 'images/pets/pets-timmy.png' },
-    { name: 'Charly',   img: 'images/pets/pets-charly.jpg' },
+    { name: 'Woody', img: 'images/pets-woody.jpg' },
+    { name: 'Sophia', img: 'images/pets/4.jpg' },
+    { name: 'Timmy', img: 'images/pets/pets-timmy.png' },
+    { name: 'Charly', img: 'images/pets/pets-charly.jpg' },
     { name: 'Scarlett', img: 'images/pets/pets-scarlet.jpg' },
-    { name: 'Freddie',  img: 'images/pets/8.jpg' },
+    { name: 'Freddie', img: 'images/pets/8.jpg' },
   ];
 
   const grid = document.querySelector('[data-js-pets-grid]');
@@ -15,28 +15,23 @@ export const initPagination = () => {
   if (!grid || !pager) return;
 
   const btnFirst = pager.querySelector('.pagination__item:nth-child(1) .pagination__link');
-  const btnPrev  = pager.querySelector('.pagination__item:nth-child(2) .pagination__link');
-  const badge    = pager.querySelector('.pagination__item:nth-child(3) .pagination__link');
-  const btnNext  = pager.querySelector('.pagination__item:nth-child(4) .pagination__link');
-  const btnLast  = pager.querySelector('.pagination__item:nth-child(5) .pagination__link');
+  const btnPrev = pager.querySelector('.pagination__item:nth-child(2) .pagination__link');
+  const badge = pager.querySelector('.pagination__item:nth-child(3) .pagination__link');
+  const btnNext = pager.querySelector('.pagination__item:nth-child(4) .pagination__link');
+  const btnLast = pager.querySelector('.pagination__item:nth-child(5) .pagination__link');
 
   const DIS = 'pagination__link--disable';
   const CUR = 'pagination__link--current';
 
-  const shuffle = (arr) => {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  };
+  function shuffle(array) {
+    return [...array].sort(() => Math.random() - 0.5);
+  }
 
   function cardsPerPage() {
     const w = window.innerWidth;
     if (w >= 1280) return 8;
-    if (w >= 768)  return 6;
-    return 3;               
+    if (w >= 768) return 6;
+    return 3;
   }
 
   function setDisabled(el, disabled) {
@@ -89,9 +84,9 @@ export const initPagination = () => {
     badge.textContent = String(store.page);
 
     setDisabled(btnFirst, store.page === 1);
-    setDisabled(btnPrev,  store.page === 1);
-    setDisabled(btnNext,  store.page === pages);
-    setDisabled(btnLast,  store.page === pages);
+    setDisabled(btnPrev, store.page === 1);
+    setDisabled(btnNext, store.page === pages);
+    setDisabled(btnLast, store.page === pages);
   }
 
   function onClick(el, handler) {
@@ -104,9 +99,9 @@ export const initPagination = () => {
   }
 
   onClick(btnFirst, () => renderPage(1));
-  onClick(btnPrev,  () => renderPage(store.page - 1));
-  onClick(btnNext,  () => renderPage(store.page + 1));
-  onClick(btnLast,  () => renderPage(totalPages()));
+  onClick(btnPrev, () => renderPage(store.page - 1));
+  onClick(btnNext, () => renderPage(store.page + 1));
+  onClick(btnLast, () => renderPage(totalPages()));
 
   let t;
   window.addEventListener('resize', () => {
